@@ -1,0 +1,100 @@
+Controller -h HttpServlet
+===
+Handler
+===
+ModelsFactory
+  -a
+    models:Map<String,OWLModel>
+    modelsFolder:String
+  -m
+    init:void:dirname.String
+    loadAll:void:
+    load:OWLModel:name.String
+    get:OWLModel:name.String
+    getNames:Set<String>:
+===
+ProjectsFactory
+  -a
+    projects:Map<String,Project>
+    projectsFolder:String
+  -m
+    init:void:dirname.String
+    loadAll:void:
+    load:Project:name.String
+    get:Project:name.String
+    getNames:Set<String>:
+===
+Project
+  -a
+    name:String
+    setts:ProjectSettings
+    classes:List<String>
+  -m
+    getClass:Class:name.String
+===
+ProjectSettings
+  -a
+    classesWidth:int
+    instancesWidth:int
+    created:Date
+    modified:Date
+===
+ClassesFactory
+  -a
+    classes:Map<String,Map<String,Class>>
+  -m
+    init:void:
+    loadAll:void:
+    load:Class:model.OWLModel
+    load:Class:modelName.OWLModel|name.String
+    get:Class:modelName.String|className.String
+    getNames:Set<String>:modelName.String
+===
+Class
+  -a
+    name:String
+    childs:List<String>
+    instances:List<String>
+    properties:List<Property>
+    setts:ClassSettings
+===
+ClassSettings
+  -a
+    filters:List<String>
+    separators:List<String>
+  -m
+===
+Property
+  -a
+    name:String
+    type:String
+    multiple:boolean
+    classes:List<String>
+    setts:PropertySettings
+  -m
+    Property::property.RDFProperty
+===
+PropertySettings
+  -a
+    x:int
+    y:int
+    w:int
+    h:int
+===
+InstancesFactory
+  -a
+    instances:Map<String,Map<String,Instance>>
+  -m
+    init:void:
+    loadAll:void:
+    load:Instance:model.OWLModel
+    load:Instance:modelName.OWLModel|name.String
+    get:Instance:modelName.String|instanceName.String
+    getNames:Set<String>:modelName.String
+===
+Instance
+  -a
+    name:String
+    values:Map<String,Object>
+  -m
+    setValue:void:name.String|value.Object

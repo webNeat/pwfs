@@ -1,0 +1,43 @@
+<h1>Projet : {{ project.name }} </h1>
+<div class="row" ng-show="msg.text != ''">
+  <div class="col-md-12">
+    <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
+  </div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<browser 
+			ids="[0]" 
+			on-selected="loadValuesOf(className, instance, properties)"
+		></browser>
+	</div>
+
+	<!-- Editor -->
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading"> Properties </div>
+			<div class="panel-body">
+				<form>
+					<div ng-repeat="p in properties" class="form-group">
+						<div ng-if="p.type == 'data' && !p.multiple">
+							<label> {{ shorten(p.name) }} </label>
+							<textarea 
+								ng-model="values[p.name]"
+								ng-change="saveValue(p.name)"
+								class="form-control" 
+							></textarea>
+						</div>
+						<div 
+							ng-if="p.type == 'data' && p.multiple"
+							ng-include="'views/partials/field-input.html'"
+						></div>
+						<div 
+							ng-if="p.type == 'object'"
+							ng-include="'views/partials/field.html'"
+						></div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

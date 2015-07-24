@@ -1,0 +1,47 @@
+<div class="row" ng-show="msg.text != ''">
+  <div class="col-md-12">
+    <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
+  </div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-primary">
+			<div class="panel-heading"> Add new project </div>
+			<div class="panel-body">
+				<div ng-show="uploading" class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{uploadProgress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadProgress}}%;">
+						{{uploadProgress}}%
+					</div>
+				</div>
+				<form ng-show="!uploading" method="post" id="uploadForm" action="{{uploadURL}}" enctype="multipart/form-data">
+					<div class="form-group" ng-class="{'has-error': !validName()}">
+						<label> Project name </label>
+						<input class="form-control" type="text" name="name" ng-model="newProject">
+					</div>
+					<div class="form-group">
+						<label>Files</label>
+						<input ng-model="files[0]" type="file" name="file1"><br>
+						<input ng-model="files[1]" type="file" name="file2"><br>
+						<input ng-model="files[2]" type="file" name="file3"><br>
+					</div>			
+					<button ng-disabled="!validName()" class="btn btn-primary" type="submit">Upload</button>
+				</form>	
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 buttons">
+		<div class="panel panel-primary">
+			<div class="panel-heading"> Select a Project </div>
+			<div class="panel-body">
+				<div ng-show="loading" class="alert alert-info">
+					Loading projects, please wait ...
+				</div>
+				<div ng-show="! loading" ng-repeat="project in projects">
+					<button ng-click="load(project)" class="btn btn-lg btn-primary">
+						{{ project.name }}
+					</button><br>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

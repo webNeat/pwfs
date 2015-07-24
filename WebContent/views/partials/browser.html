@@ -1,0 +1,92 @@
+<div class="row" ng-show="msg.text">
+  <div class="col-md-12">
+    <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
+  </div>
+</div>
+<div ng-show="showingFilter">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading"> Instances pattern </div>
+				<div class="panel-body">
+					<instance-display-pattern 
+						choices="propertiesChoices"
+						filters="filters"
+						separators="separators"
+						on-applied="applySelectedFilter(filters, separators)"
+					></instance-display-pattern>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<!-- Classes Browser -->
+		<div class="panel panel-primary">
+			<div class="panel-heading"> 
+				Classes
+			</div>
+			<div class="panel-body">
+				<div ng-show="loadingClasses" class="alert alert-info"> Les classes sont en cours de chargement ... </div>
+				<script type="text/ng-template" id="tree_node.html">
+					<div class="tree_node">
+						<div class="btn-group" role="group">
+							<button ng-show="getClass(c).childs.length > 0" ng-click="toggleChildsOf(c)" class="btn btn-success btn-xs">
+								<span ng-show="!getClass(c).showChilds" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<span ng-show="getClass(c).showChilds" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							</button>
+							<button 
+								ng-class="{ 
+									'btn-default': c != currentClassIndex,
+									'btn-primary': c == currentClassIndex
+								}" 
+								ng-click="loadInstancesOf(c)" 
+								class="btn btn-default btn-xs"
+							> {{ getClass(c).name }} </button>
+						</div>
+						<div ng-show="getClass(c).showChilds">
+							<div ng-repeat="c in getClass(c).childs" ng-include="'tree_node.html'"></div>
+						</div> 
+					</div>
+				</script>
+				<div ng-repeat="c in ids" ng-include="'tree_node.html'"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<!-- Instances Browser -->
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Instances
+				<div class="btn-group pull-right">
+					<button ng-click="showFilter()" class="btn btn-default btn-xs">
+						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+					</button>
+					<button ng-click="createInstance()" class="btn btn-success btn-xs">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+				</div> 
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="i in instances">
+					<div class="btn-group">
+					<button ng-click="removeInstance(i)" class="btn btn-danger btn-sm">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+					<button 
+							ng-click="instanceClicked(i)"
+							ng-class="{ 
+								'btn-default': i.name != currentInstance,
+								'btn-primary': i.name == currentInstance
+							}"
+							class="btn btn-sm"
+						>
+							<instance-caption instance="i"></instance-caption>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

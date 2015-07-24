@@ -1,0 +1,56 @@
+<!doctype html>
+<html id="ng-app" ng-app="protege">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Protégé</title>
+        <!-- Include Libraries -->
+        <!-- jQuery -->
+        <script type="text/javascript" src="vendors/jquery/jquery.js"></script>
+        <!-- jQuery UI -->
+<!--         <script type="text/javascript" src="vendors/jquery-ui/jquery-ui.js"></script>
+        <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css"> -->
+        <!-- Ajax form jquery plugin -->
+        <script src="vendors/jquery/ajax.form.js"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" src="vendors/bootstrap/bootstrap.js"></script>
+        <link rel="stylesheet" href="vendors/bootstrap/bootstrap.css">
+        <!-- AngularJs -->
+        <script type="text/javascript" src="vendors/angularjs/all.js"></script>
+        <!-- ngDialog module -->
+        <script type="text/javascript" src="vendors/ng-dialog/ng-dialog.js"></script>
+        <link rel="stylesheet" href="vendors/ng-dialog/theme.css">
+        <!-- Additonal Styles -->
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#/">Protégé</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fuild top-container">
+            <div ng-view=""></div>
+        </div>
+	    <!-- Application Js files -->
+        <script src="app.js"></script>
+        <script src="controllers/projects.js"></script>
+        <script src="controllers/dashboard.js"></script>
+        <script src="directives/browser.js"></script>
+        <script src="directives/instance-display-pattern.js"></script>
+        <script src="directives/instance-caption.js"></script>
+    </body>
+</html>

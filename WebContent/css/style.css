@@ -1,0 +1,24 @@
+.top-container {
+	margin-top: 70px;
+	padding: 0px 5px;
+}
+
+.buttons {
+	text-align: center;
+}
+
+.buttons .btn {
+	margin-top: 10px;
+}
+
+.tree_node .btn-group {
+	margin-top: 5px;
+}
+
+.tree_node {
+	margin-left: 10px;
+}
+
+input.small-text-input {
+	width: 50px !important;
+}

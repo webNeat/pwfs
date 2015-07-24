@@ -1,0 +1,26 @@
+Correction des bugs et fonctionnalités non terminées :
+	Paramétrer le projet courant (bogue classe chapeau)
+	Paramétrage du label de l’instance (eg. display name) :
+	Paramétrage display name non pérenne (on ne le voit pas après saisie)
+	Le label n’est pas identique pour toutes ses représentations
+	Afficher les propriétés de l’instance par ordre alphabétique (peu importe leur type)
+	Pouvoir créer une nouvelle valeur d’une object property (cas des restrictions)
+	Spécifier les messages d’erreurs 
+	Voir bugs (mantis)
+
+Améliorations :
+	Bouton suppression d’une valeur d’object property à déplacer à gauche
+	Bouton suppression d’une instance à placer dans le contexte de la fenêtre d’Instances (pour sélectionner multiple instances et les supprimer)
+
+To do :
+	Mise en forme personnalisée du formulaire de capture (superposition à éviter)
+	Sauvegarde du paramétrage en central (sur le serveur)
+	Documentation technique (javadoc [non générée], architecture technique)
+	Documentation utilisateurs
+	Finalisation de la carto globale 
+	Digrammes (classes, séquences, cas d’utilisation)
+	Etude de faisabilité de la généricité de la fonction ‘new project’ (Project Name/PPRJ/OWL(s) files)
+	Affichage nom classe courante et instance courante (For project / For class / For individual)
+	Barre de navigation:
+		Haut : ajouter lien vers le doc (en PDF) et bouton retour à la page d’accueil
+		Bas : ajouter bandeau SEAMLESS

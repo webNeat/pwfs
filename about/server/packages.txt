@@ -1,0 +1,15 @@
+fr.pco.accenture
+	http
+		Controlleur
+	handlers
+		Handler
+	factories
+		
+	models
+		Project
+		ProjectSettings
+		Class
+		ClassSettings
+		Instance
+		Property
+		Value
