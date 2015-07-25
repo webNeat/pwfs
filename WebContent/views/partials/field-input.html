@@ -9,11 +9,14 @@
 <ul class="list-group">
   <li ng-show="values[p.name].length == 0" class="list-group-item"> Click "+" to add values </li>
   <li ng-repeat="v in values[p.name]" class="list-group-item">
-  	<input type="text" ng-model="v" ng-change="saveValue(p.name)" class="form-control">
-  	<div class="pull-right btn-group">
-  		<button ng-click="removeValue(p, v)" class="btn btn-danger btn-xs">
-  			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-  		</button>
-  	</div>
+
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button ng-click="removeValue(p, v)" class="btn btn-danger btn-xs">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+      </div>
+      <input type="text" ng-model="v" ng-change="saveValue(p.name)" class="form-control">
+    </div>
   </li>
 </ul>
