@@ -52,12 +52,12 @@ public class Files {
 	}
 
 	public static String classSettingsFilePath(String projectName, String className){
-		className = Helper.stringAfter(className, "#").replaceAll(File.separator, "_");
+		className = Helper.stringAfter(className, "#");
 		return classesFolderPath(projectName) + File.separator + className + ".json";
 	}
 
 	public static String propertySettingsFilePath(String projectName, String className, String propertyName){
-		className = Helper.stringAfter(className, "#").replaceAll(File.separator, "_");
+		className = Helper.stringAfter(className, "#");
 		return classFolderPath(projectName, className) + File.separator + propertyName + ".json";
 	}
 
