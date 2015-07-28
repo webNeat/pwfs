@@ -70,6 +70,8 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 								$scope.classes.all[i].showChilds = true;
 							}
 							sortClasses();
+							if($scope.ids == null)
+								$scope.ids = $scope.getSuperClassesIndexes();
 							$scope.loadingClasses = false;
 						}
 					})
@@ -77,6 +79,21 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 						$scope.alert('danger', 'Some error happened on server side; Please check the server console !');
 						$scope.loadingClasses = false;
 					});
+			}
+
+			$scope.getSuperClassesIndexes = function(){
+				var isSuperClass = $scope.classes.all.map(function(c){
+					return true;
+				});
+				var size = $scope.classes.all.length;
+				for(var i = 0; i < size; i++)
+					for(var j = 0; j < $scope.classes.all[i].childs.length; j ++)
+						isSuperClass[$scope.classes.index[$scope.classes.all[i].childs[j]]] = false;
+				var superClassesIndexes = [];
+				for(var i = 0; i < size; i++)	
+					if(isSuperClass[i])
+						superClassesIndexes.push(i);
+				return superClassesIndexes;
 			}
 
 			$scope.alert = function(type, msg){
@@ -117,7 +134,7 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 									return c != -1;
 								});
 								if(p.classes.length == 0)
-									p.classes = [0];
+									p.classes = null;
 							}
 							return p;
 						});

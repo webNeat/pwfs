@@ -12,7 +12,7 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 	$scope.selectedInstance = '';
 	$scope.selectedProperty = '';
 	$scope.isSelectedPropertyMultiple = true;
-	$scope.ids = [];
+	$scope.ids = null;
 	$scope.dialog = null;
 
 	$scope.shorten = function(name){
