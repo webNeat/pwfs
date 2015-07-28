@@ -53,25 +53,42 @@ public class ClassesFactory {
 
 	@SuppressWarnings("deprecation")
 	public static void load(String modelName, OWLModel model) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
+		System.out.println("* LOAD S, M : " );
 		if(! has(modelName))
 			classes.put(modelName, new HashMap<String, Class>());
 		// Lecture de la première class dans le modèle
 		String firstClassName = model.getOWLDataRangeClass().getDirectSuperclasses().toString();
 		firstClassName = Helper.stringBetween(firstClassName, "(", ")");
-		firstClassName = model.getOWLNamedClass(firstClassName).getVisibleDirectSubclasses().toString();
-		firstClassName = Helper.stringBetween(firstClassName, "(", ")");
-		// Chargement de cette classe et de ses classes filles
-		load(modelName, firstClassName);
+		System.out.println("firstClasseName    :   :  " + firstClassName);
+		for(Object o : model.getOWLNamedClass(firstClassName).getVisibleDirectSubclasses()){
+		    String name = Helper.stringBetween(o.toString(), "(", ")");
+		    System.out.println("Superclasse: " + name);
+		    // Chargement de cette classe et de ses classes filles
+		    load(modelName, name);
+		}
+//		String firstClassName = model.getOWLDataRangeClass().getDirectSuperclasses().toString();
+//		firstClassName = Helper.stringBetween(firstClassName, "(", ")");
+//		System.out.println("* First ClasseName :" + firstClassName);
+//		
+//		firstClassName = model.getOWLNamedClass(firstClassName).getVisibleDirectSubclasses().toString();
+//		firstClassName = Helper.stringBetween(firstClassName, "(", ")");
+//		System.out.println("* First ClasseName second:" + firstClassName);
+//		
+//		// Chargement de cette classe et de ses classes filles
+//		load(modelName, firstClassName);
 	}
 
 	/**
 	 * Cette méthode charge une classe et ses classes filles de manière récursive
 	 */
 	public static Class load(String modelName, String className) throws JsonIOException, JsonSyntaxException, FileNotFoundException {
+		System.out.println("** LOAD S,S       " + className);
 		Class result = loadOne(modelName, className);
+		System.out.println("** RESULT  " + result );
 		for(String child : result.getChilds()){
 			load(modelName, child);
 		}
+		System.out.println("** RESULT Final " + result);
 		return result;
 	}
 
@@ -85,8 +102,12 @@ public class ClassesFactory {
 		// Chargement de la classe
 		OWLModel model = ModelsFactory.get(modelName);
 		Helper helper = new Helper(model);
+		System.out.println("***  LOADONE  ");
+		System.out.println(className);
 		OWLNamedClass namedClass = model.getOWLNamedClass(className);
+		System.out.println("*** namedClass   " + namedClass);
 		String name = className;
+		System.out.println("n*** name " + name);
 		// Chargement des instances
 		List<String> instances = new ArrayList<String>();
 		Collection<?> individuals = namedClass.getInstances(false);
@@ -113,8 +134,10 @@ public class ClassesFactory {
 		}
 		// Chargement des noms des classes filles
 		List<String> childs = helper.getChilds(className);
+		System.out.println("****  Childs  " + childs );
 		// Construire la classe
 		Class result = new Class(name, childs, instances, properties, setts);
+		System.out.println("***** construct Class  " + result);
 		// Ajouter la classes dans la table de hashage
 		classes.get(modelName).put(className, result);
 		return result;
