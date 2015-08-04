@@ -10,6 +10,7 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 	$scope.properties = [];
 	$scope.values = {};
 	$scope.selectedInstance = '';
+	$scope.selectedClass = '';
 	$scope.selectedProperty = '';
 	$scope.isSelectedPropertyMultiple = true;
 	$scope.ids = null;
@@ -19,20 +20,53 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 		return name.substring(name.indexOf("#") + 1)
 	}
 
+	$scope.updateClass = function(className){
+		$scope.selectedClass = className;
+	}
+
 	$scope.loadValuesOf = function(className, instance, properties){
 		if(instance == null){
 			$scope.values = {};
 			$scope.properties = [];
 			$scope.selectedInstance = $scope.selectedProperty = '';
-		} else {		
-			$scope.properties = properties.sort(function(a, b){
-				if(a.type == b.type)
-					return 0;
-				if(a.type == 'data')
+		} else {
+			var dataProps = properties.filter(function(a){
+				return a.type == 'data';
+			}).sort(function(a, b){
+				a = $scope.shorten(a.name).toLowerCase();
+				b = $scope.shorten(b.name).toLowerCase();
+				if( a < b )
 					return -1;
-				return 1;
+				else if(a > b)
+					return 1;
+				else
+					return 0;
 			});
+			var objProps = properties.filter(function(a){
+				return a.type != 'data';
+			}).sort(function(a, b){
+				a = $scope.shorten(a.name).toLowerCase();
+				b = $scope.shorten(b.name).toLowerCase();
+				if( a < b )
+					return -1;
+				else if(a > b)
+					return 1;
+				else
+					return 0;
+			});
+
+			$scope.properties = dataProps.concat(objProps);
+
+			var test = $scope.properties.map(function(a){
+				return {
+					type: a.type,
+					name: $scope.shorten(a.name)
+				};
+			});
+			console.log(JSON.stringify(test));
+
 			$scope.selectedInstance = instance;
+			$scope.selectedClass = className;
 			$scope.values = {};
 			$scope.properties.forEach(function(p){
 				if(p.type == 'data' && !p.multiple){

@@ -1,4 +1,4 @@
-<h1>Projet : {{ project.name }} </h1>
+<!-- <h1>Projet : {{ project.name }} </h1> -->
 <div class="row" ng-show="msg.text != ''">
   <div class="col-md-12">
     <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
@@ -6,14 +6,30 @@
 </div>
 <div class="row">
 	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-6">
+				<ol class="breadcrumb">
+					<li class="active">{{project.name}}</li>
+				</ol>
+			</div>
+			<div class="col-md-6">
+				<ol class="breadcrumb">
+					<li class="active"> For Class: {{shorten(selectedClass)}} </li>
+				</ol>
+			</div>
+		</div>
 		<browser 
 			ids="null" 
 			on-selected="loadValuesOf(className, instance, properties)"
+			on-class-changed="updateClass(className)"
 		></browser>
 	</div>
 
 	<!-- Editor -->
 	<div class="col-md-6">
+		<ol class="breadcrumb">
+			<li class="active"> {{selectedInstance.name}} </li>
+		</ol>
 		<div class="panel panel-primary">
 			<div class="panel-heading"> Properties </div>
 			<div class="panel-body">
