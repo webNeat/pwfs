@@ -156,9 +156,9 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 					$scope.loadingClasses = false;
 				});
 			}
-			$scope.ids = [];
+			$scope.idsKK = [];
 
-			  $scope.$watchCollection('ids', function(newVal) {
+			  $scope.$watchCollection('idskk', function(newVal) {
 			    for (var i = 0; i < newVal.length; ++i) {
 			      console.log(newVal[i]);
 			    }
