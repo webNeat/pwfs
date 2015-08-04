@@ -10,6 +10,7 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 	$scope.properties = [];
 	$scope.values = {};
 	$scope.selectedInstance = '';
+	$scope.selectedClass = '';
 	$scope.selectedProperty = '';
 	$scope.isSelectedPropertyMultiple = true;
 	$scope.ids = null;
