@@ -1,1 +1,0 @@
-mysql -u root -pmysql protege < "kbsipoc.sql"
