@@ -4,7 +4,8 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 		restrict: 'E',
 		scope: {
 			ids: '=',
-			onSelected: '&'
+			onSelected: '&',
+			onClassChanged: '&'
 		},
 		link: function($scope, $element, $attr){
 
@@ -111,6 +112,7 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 				$scope.currentClassIndex = index;
 
 				var className = $scope.getClass(index).name;
+				$scope.onClassChanged({ className: className });
 				$http({url: apiURL + 'instances', method:'GET', params: { 
 					project: $scope.project.name,
 					'class': $scope.getClass(index).fullName

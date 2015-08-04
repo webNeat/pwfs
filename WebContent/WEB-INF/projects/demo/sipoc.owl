@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns="http://seamless.pco-innovation.com/energy/common/sipoc#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xml:base="http://seamless.pco-innovation.com/energy/common/sipoc">
+  <owl:Ontology rdf:about="">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Supplier Input Process Output Customer</rdfs:comment>
+  </owl:Ontology>
+  <owl:Class rdf:ID="BUSINESS_FUNCTION">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:ID="BUSINESS_CONCEPT"/>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="produces"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="managedBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="consumes"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="#BUSINESS_CONCEPT"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >BUSINESS FUNCTION</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="involves"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:ID="BUSINESS_WHO"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="supports"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="super-levelOf"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="#BUSINESS_CONCEPT"/>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="controledBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="supportedBy"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="receives"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:ID="BUSINESS_EVENT"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="emits"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="#BUSINESS_EVENT"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="manages"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="involvedIn"/>
+        </owl:onProperty>
+        <owl:allValuesFrom>
+          <owl:Class rdf:about="#BUSINESS_WHO"/>
+        </owl:allValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="#BUSINESS_EVENT">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >BUSINESS EVENT</rdfs:label>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >A fact which triggers a Process or Activity
+The business event is used to show the event that starts (“trigger”) or ends a process or an activity. It is often used for unexpected events or a deviation in the “normal” operational flow that triggers a support or management process.</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="receivedBy"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="emittedBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:Class rdf:about="#BUSINESS_WHO">
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#involvedIn"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >BUSINESS WHO</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:ID="BUSINESS_ROLE">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >BUSINESS ROLE</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom>
+          <owl:Class rdf:ID="BUSINESS_FORUM"/>
+        </owl:allValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="memberOf"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#BUSINESS_WHO"/>
+  </owl:Class>
+  <owl:Class rdf:about="#BUSINESS_FORUM">
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >The forum is a resource that is performing activities in the process. The forum have members that collectively perform an activity where several competencies are needed to perform the activity. The forum is defined once and then re-used in other processes to perform activities (i.e. take a decision)</rdfs:comment>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_ROLE"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="hasMember"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="#BUSINESS_WHO"/>
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >BUSINESS FORUM</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="#BUSINESS_CONCEPT">
+    <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >BUSINESS CONCEPT</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="producedBy"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="controls"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="consumedBy"/>
+        </owl:onProperty>
+        <owl:allValuesFrom rdf:resource="#BUSINESS_FUNCTION"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="#consumedBy">
+    <rdfs:domain rdf:resource="#BUSINESS_CONCEPT"/>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#consumes"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasPart">
+    <rdfs:range rdf:resource="#BUSINESS_CONCEPT"/>
+    <rdfs:domain rdf:resource="#BUSINESS_CONCEPT"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="partOf"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#involves">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#involvedIn"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <rdfs:range rdf:resource="#BUSINESS_WHO"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#manages">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#managedBy"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#memberOf">
+    <rdfs:range rdf:resource="#BUSINESS_FORUM"/>
+    <rdfs:domain rdf:resource="#BUSINESS_ROLE"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#hasMember"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasMember">
+    <rdfs:domain rdf:resource="#BUSINESS_FORUM"/>
+    <owl:inverseOf rdf:resource="#memberOf"/>
+    <rdfs:range rdf:resource="#BUSINESS_ROLE"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#controls">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#controledBy"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#BUSINESS_CONCEPT"/>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#partOf">
+    <owl:inverseOf rdf:resource="#hasPart"/>
+    <rdfs:domain rdf:resource="#BUSINESS_CONCEPT"/>
+    <rdfs:range rdf:resource="#BUSINESS_CONCEPT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#producedBy">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#produces"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#BUSINESS_CONCEPT"/>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#supports">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#supportedBy"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#controledBy">
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf rdf:resource="#controls"/>
+    <rdfs:range rdf:resource="#BUSINESS_CONCEPT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#emits">
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#emittedBy"/>
+    </owl:inverseOf>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <rdfs:range rdf:resource="#BUSINESS_EVENT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#super-levelOf">
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:ID="hasSuper-level"/>
+    </owl:inverseOf>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#receivedBy">
+    <rdfs:domain rdf:resource="#BUSINESS_EVENT"/>
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#receives"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#produces">
+    <owl:inverseOf rdf:resource="#producedBy"/>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <rdfs:range rdf:resource="#BUSINESS_CONCEPT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#supportedBy">
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf rdf:resource="#supports"/>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#involvedIn">
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <rdfs:domain rdf:resource="#BUSINESS_WHO"/>
+    <owl:inverseOf rdf:resource="#involves"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#managedBy">
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf rdf:resource="#manages"/>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#hasSuper-level">
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf rdf:resource="#super-levelOf"/>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#emittedBy">
+    <rdfs:range rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf rdf:resource="#emits"/>
+    <rdfs:domain rdf:resource="#BUSINESS_EVENT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#consumes">
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+    <owl:inverseOf rdf:resource="#consumedBy"/>
+    <rdfs:range rdf:resource="#BUSINESS_CONCEPT"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="#receives">
+    <owl:inverseOf rdf:resource="#receivedBy"/>
+    <rdfs:range rdf:resource="#BUSINESS_EVENT"/>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:ID="levelOfDescription">
+    <rdfs:range>
+      <owl:DataRange>
+        <owl:oneOf rdf:parseType="Resource">
+          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+          >strategic</rdf:first>
+          <rdf:rest rdf:parseType="Resource">
+            <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >tactic</rdf:first>
+            <rdf:rest rdf:parseType="Resource">
+              <rdf:rest rdf:parseType="Resource">
+                <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+                >activity</rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+              </rdf:rest>
+              <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+              >operational</rdf:first>
+            </rdf:rest>
+          </rdf:rest>
+        </owl:oneOf>
+      </owl:DataRange>
+    </rdfs:range>
+    <rdfs:domain rdf:resource="#BUSINESS_FUNCTION"/>
+  </owl:DatatypeProperty>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4.8, Build 629)  http://protege.stanford.edu -->
