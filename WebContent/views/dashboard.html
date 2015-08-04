@@ -22,6 +22,7 @@
 						<div ng-if="p.type == 'data' && !p.multiple">
 							<label> {{ shorten(p.name) }} </label>
 							<textarea 
+							
 								ng-model="values[p.name]"
 								ng-change="saveValue(p.name)"
 								class="form-control" 
