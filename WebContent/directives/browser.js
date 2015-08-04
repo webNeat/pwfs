@@ -156,6 +156,14 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 					$scope.loadingClasses = false;
 				});
 			}
+			$scope.ids = [];
+
+			  $scope.$watchCollection('ids', function(newVal) {
+			    for (var i = 0; i < newVal.length; ++i) {
+			      console.log(newVal[i]);
+			    }
+			  });
+			   
 
 			$scope.instanceClicked = function(i){
 				if(i == undefined){

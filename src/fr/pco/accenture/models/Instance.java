@@ -2,6 +2,10 @@ package fr.pco.accenture.models;
 
 import java.util.Map;
 
+/**
+ * @author m.salah.bennani
+ *
+ */
 public class Instance {
 	private String name;
 	private String className;

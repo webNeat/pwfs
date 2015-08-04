@@ -32,7 +32,7 @@
 				<script type="text/ng-template" id="tree_node.html">
 					<div class="tree_node">
 						<div class="btn-group" role="group">
-							<button ng-show="getClass(c).childs.length > 0" ng-click="toggleChildsOf(c)" class="btn btn-success btn-xs">
+							<button ng-show="getClass(c).childs.length > 0" ng-click="toggleChildsOf(c)" class="btn btn-success btn-xs" style="margin-left: -15px;">
 								<span ng-show="!getClass(c).showChilds" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 								<span ng-show="getClass(c).showChilds" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							</button>
@@ -58,22 +58,30 @@
 		<!-- Instances Browser -->
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				Instances
-				<div class="btn-group pull-right">
+				Instance
+				<div class="btn-group pull-right" style="margin-bottom: 10px;">
 					<button ng-click="showFilter()" class="btn btn-default btn-xs">
 						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
 					</button>
-					<button ng-click="createInstance()" class="btn btn-success btn-xs">
+					<button ng-click="createInstance()" class="btn btn-success btn-xs" style="margin-left: 6px;" >
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+					</button>
+					<button ng-click="removeSelectedInstances()" class="btn btn-danger btn-xs" style="margin-left: 6px;">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 				</div> 
 			</div>
+
+			
 			<div class="panel-body">
 				<div ng-repeat="i in instances">
 					<div class="btn-group">
-					<button ng-click="removeInstance(i)" class="btn btn-danger btn-sm">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
+	    	    		
+	    	    		<input  type="checkbox"  class="btn glyphicon glyphicon-uncheked large" 
+	    	    		aria-hidden="true" style="width: 25px; height: 25px; margin-right: 3px;"
+	    	    		ng-model="ids[$index]" ng-true-value="{{i}}"
+	    	    		/>
+						
 					<button 
 							ng-click="instanceClicked(i)"
 							ng-class="{ 

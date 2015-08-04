@@ -18,10 +18,11 @@
 			<div class="panel-heading"> Properties </div>
 			<div class="panel-body">
 				<form>
-					<div ng-repeat="p in properties" class="form-group">
+					<div ng-repeat="p in properties | orderBy:'name' " class="form-group">
 						<div ng-if="p.type == 'data' && !p.multiple">
 							<label> {{ shorten(p.name) }} </label>
 							<textarea 
+							
 								ng-model="values[p.name]"
 								ng-change="saveValue(p.name)"
 								class="form-control" 

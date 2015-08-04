@@ -265,7 +265,7 @@ public class Handler {
 		}
 		return result;
 	}
-
+	
 	/**
 	 * Traitement de la requète
 	 * POST /api/values
