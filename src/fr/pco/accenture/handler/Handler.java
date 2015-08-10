@@ -347,9 +347,9 @@ public class Handler {
 		} else if(classe == null){
 			result.put("done", false);
 			result.put("error", "Class '" + className + "' not found");
-		} else if(!params.containsKey("filters") || !params.containsKey("separators")){
-			result.put("done", false);
-			result.put("error", "Some request parameters are missing");
+		// } else if(!params.containsKey("filters") || !params.containsKey("separators")){
+		// 	result.put("done", false);
+		// 	result.put("error", "Some request parameters are missing");
 		} else {
 			ClassSettings cs = new ClassSettings(Arrays.asList(params.get("filters")), Arrays.asList(params.get("separators")));
 			String path = Files.classSettingsFilePath(projectName, className);
