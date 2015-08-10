@@ -118,6 +118,9 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 					'class': $scope.getClass(index).fullName
 				}})
 				.success(function(response){
+					response = response.filter(function(e){
+						return e != null;
+					});
 					if(response.length < 1){
 						$scope.alert('info', "This class doesn't contain any instance");
 						console.log('$scope.msg: ', $scope.msg);
@@ -231,9 +234,14 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 
 			$scope.showFilter = function(){
 				console.log('Showing Filter Window');
-				$scope.showingFilter = true;
+				var setts = $scope.getClass($scope.currentClassIndex).setts;
+				if(setts != null && setts != undefined){
+					$scope.filters = setts.filters;
+					$scope.separators = setts.separators;
+				}
 				console.log('$scope.filters: ', $scope.filters);
 				console.log('$scope.separators: ', $scope.separators);
+				$scope.showingFilter = true;
 			};
 
 			$scope.applySelectedFilter = function(filters, separators){

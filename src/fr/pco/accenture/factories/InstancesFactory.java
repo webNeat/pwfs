@@ -47,6 +47,8 @@ public class InstancesFactory {
 		Helper helper = new Helper(model);
 		Map<String, Object> values = new HashMap<String, Object>();
 		OWLIndividual individual = model.getOWLIndividual(instanceName);
+		if(individual == null)
+			return null;
 		for(RDFProperty p : helper.getProperties(className))
 			values.put(p.getName(), individual.getPropertyValues(p));
 		Instance instance = new Instance(instanceName , className, values);
