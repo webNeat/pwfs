@@ -38,7 +38,8 @@ public class ModelsFactory {
 		if(path != null){
 			Collection<String> errors = new ArrayList<String>();
 			Project currentProject = Project.loadProjectFromFile(path, errors);
-			result = (OWLModel) currentProject.getKnowledgeBase();
+			if(currentProject != null)
+				result = (OWLModel) currentProject.getKnowledgeBase();
 		}
 		if(result != null)
 			models.put(name, result);
