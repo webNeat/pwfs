@@ -124,13 +124,13 @@ public class Controller extends HttpServlet {
 	
 	private String initURIAndParams(HttpServletRequest request){
 		String uri = request.getRequestURI().toString();
-		System.out.println("Initialy: " + uri);
+//		System.out.println("Initialy: " + uri);
 		try {
-			System.out.println("Before");
-			System.out.println(uri);
+//			System.out.println("Before");
+//			System.out.println(uri);
 			uri = uri.substring(25);
-			System.out.println("After");
-			System.out.println(uri);
+//			System.out.println("After");
+//			System.out.println(uri);
 			params = request.getParameterMap();
 			handler.init(params);
 		} catch(Exception e){
