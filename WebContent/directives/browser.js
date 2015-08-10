@@ -110,6 +110,14 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 				$scope.instanceClicked();
 				$scope.loadingInstances = true;
 				$scope.currentClassIndex = index;
+				var setts = $scope.getClass(index).setts;
+				if(setts != undefined && setts != null){
+					$scope.filters = setts.filters;
+					$scope.separators = setts.separators;
+				} else {
+					$scope.filters = [];
+					$scope.separators = [];
+				}
 
 				var className = $scope.getClass(index).name;
 				$scope.onClassChanged({ className: className });
@@ -171,6 +179,7 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 					});					
 				} else {
 					$scope.currentInstance = i.name;
+					$scope
 					$scope.onSelected({
 						className: $scope.getClass($scope.currentClassIndex).fullName,
 						instance: i,
