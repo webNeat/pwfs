@@ -38,9 +38,20 @@
 <!-- 			      </a> -->
                     <a class="navbar-brand" href="#/">ProtégéWeb4SEAMLESS</a>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse navbar-right">
+                 <div id="navbar" class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                    
+                    	<ul class="nav navbar-nav navbar-right">
+					        <li class="dropdown">
+					          <a  class="navbar-brand " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					        Help <span class="caret"></span></a>
+					          <ul class="dropdown-menu">
+					            <li><a href="#">User guide</a></li>
+					             <li><a href="#">Send feedback</a></li>
+					            <li role="separator" class="divider"></li>
+					            <li><a href="#">About</a></li>
+					          </ul>
+					        </li>
+					      </ul>
                     </ul>
                 </div>
             </div>
@@ -49,7 +60,19 @@
             <div ng-view=""></div>
         </div>
 
-		 
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	   <div class="container-fluid">
+	    <div class="navbar-header">
+	    <div class="navbar-brand" style="margin-left: 410px;">ProtégéWeb4SEAMLESS</div>
+	    <div class="navbar-brand">|</div>
+	    <div class="navbar-brand">Powered by </div>
+	     <a class="navbar-brand" href="">
+	        <img alt="Brand" src="images/aa.png">
+	      </a>
+	      <div class="navbar-brand">a PCO Innovation </div> <div class="navbar-brand" style="color: blue">Consulting Team </div> <div class="navbar-brand">initiative</div>
+	    </div>
+	  </div>
+	</nav>
    <!-- Application Js files -->
 		</script>
         <script src="app.js"></script>
