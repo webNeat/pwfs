@@ -120,6 +120,7 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 				}
 
 				var className = $scope.getClass(index).name;
+				console.log(className + ' setts:', setts);
 				$scope.onClassChanged({ className: className });
 				$http({url: apiURL + 'instances', method:'GET', params: { 
 					project: $scope.project.name,
@@ -281,7 +282,7 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 					$scope.loadingClasses = false;
 				});
 			}
-
+			
 			loadClasses();
 		}
 	};

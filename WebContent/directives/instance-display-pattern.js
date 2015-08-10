@@ -24,6 +24,8 @@ app.directive('instanceDisplayPattern', function($rootScope, $http, ngDialog){
 				$scope.separators.push(' ');
 			}
 
+			console.log('directive filters: ', $scope.filters);
+
 			$scope.apply = function(){
 				var data = {
 					filters: $scope.filters,

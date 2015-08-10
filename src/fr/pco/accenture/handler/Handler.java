@@ -351,9 +351,20 @@ public class Handler {
 		// 	result.put("done", false);
 		// 	result.put("error", "Some request parameters are missing");
 		} else {
-			ClassSettings cs = new ClassSettings(Arrays.asList(params.get("filters")), Arrays.asList(params.get("separators")));
+			List<String> filters = null;
+			if(params.get("filters") != null)
+				filters = Arrays.asList(params.get("filters"));
+			List<String> separators = null;
+			if(params.get("separators") != null)
+				separators = Arrays.asList(params.get("separators"));
+			
+			
+			ClassSettings cs = new ClassSettings(filters, separators);
 			String path = Files.classSettingsFilePath(projectName, className);
 			JSON.write(cs, path);
+			System.out.println("filters: " + filters);
+			System.out.println("separators: " + separators);
+			System.out.println("Settings saved !");
 			ClassesFactory.loadOne(projectName, className);
 			result.put("done", true);
 		}
