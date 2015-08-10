@@ -76,12 +76,9 @@
 			<div class="panel-body">
 				<div ng-repeat="i in instances">
 					<div class="btn-group">
-	    	    		
 	    	    		<input  type="checkbox"  class="btn glyphicon glyphicon-uncheked large" 
-	    	    		aria-hidden="true" style="width: 25px; height: 25px; margin-right: 3px;"
-	    	    		ng-model="ids[$index]" ng-true-value="{{i}}"
+	    	    		 style="width: 25px; height: 25px; margin-right: 3px;"
 	    	    		/>
-						
 					<button 
 							ng-click="instanceClicked(i)"
 							ng-class="{ 
