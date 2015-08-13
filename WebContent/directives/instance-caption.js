@@ -18,6 +18,7 @@ app.directive('instanceCaption', function($rootScope, $http){
 					'class': $scope.instance.className
 				}})
 				.success(function(response){
+					console.log('class-settings:', response);
 					if(response != null){
 						var vals = {};
 						for(var key in $scope.instance.values){
@@ -38,6 +39,8 @@ app.directive('instanceCaption', function($rootScope, $http){
 
 						$scope.caption = '';
 						var tempIndex = 0;
+						if(response.separators == undefined)
+							response.separators = [];
 						while(tempIndex < filters.length){
 							$scope.caption += vals[filters[tempIndex]];
 							if(tempIndex < response.separators.length && response.separators[tempIndex] != '')
@@ -56,6 +59,8 @@ app.directive('instanceCaption', function($rootScope, $http){
 				});				
 			};
 
+			console.log('Instance: ', $scope.instance);
+
 			if($scope.instance != undefined){
 				if(typeof instance === 'string'){
 					$http({url: apiURL + 'instance', method:'GET', params: { 
@@ -68,6 +73,7 @@ app.directive('instanceCaption', function($rootScope, $http){
 						applyFilter();
 					});
 				} else {
+					console.log('Not String !');
 					applyFilter();
 				}
 			}
