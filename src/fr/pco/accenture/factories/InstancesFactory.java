@@ -1,12 +1,16 @@
 package fr.pco.accenture.factories;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import edu.stanford.smi.protegex.owl.model.OWLIndividual;
 import edu.stanford.smi.protegex.owl.model.OWLModel;
 import edu.stanford.smi.protegex.owl.model.RDFProperty;
+import edu.stanford.smi.protegex.owl.model.impl.DefaultOWLIndividual;
 import fr.pco.accenture.models.Instance;
 import fr.pco.accenture.utils.Helper;
 
@@ -37,10 +41,11 @@ public class InstancesFactory {
 			instances.put(modelName, new HashMap<String, Instance>());
 		for(String className : ClassesFactory.getNames(modelName))
 			for(String instanceName : ClassesFactory.get(modelName, className).getInstances())
-				load(modelName, className, instanceName);
+				load(modelName, className, instanceName, true);
 	}
 
-	public static Instance load(String modelName, String className, String instanceName) {
+	@SuppressWarnings("unchecked")
+	public static Instance load(String modelName, String className, String instanceName, boolean withObjectValues) {
 		OWLModel model = ModelsFactory.get(modelName);
 		if(model == null)
 			return null;
@@ -49,9 +54,19 @@ public class InstancesFactory {
 		OWLIndividual individual = model.getOWLIndividual(instanceName);
 		if(individual == null)
 			return null;
-		for(RDFProperty p : helper.getProperties(className))
-			values.put(p.getName(), individual.getPropertyValues(p));
-		Instance instance = new Instance(instanceName , className, values);
+		for(RDFProperty p : helper.getProperties(className)){
+			if(withObjectValues && p.getRangeDatatype() == null){
+				Collection val = new ArrayList<Object>();
+				for(Object o : individual.getPropertyValues(p)){
+					DefaultOWLIndividual temp = (DefaultOWLIndividual) o;
+					val.add(load(modelName, temp.getDirectType().getName(), temp.getName(), false));
+				}
+				values.put(p.getName(), val);
+			} else {
+				values.put(p.getName(), individual.getPropertyValues(p));	
+			}			
+		}
+		Instance instance = new Instance(instanceName, className, values);
 		instances.get(modelName).put(instanceName, instance);
 		return instance;
 	}

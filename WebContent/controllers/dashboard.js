@@ -77,11 +77,7 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 					else
 						$scope.values[p.name] = instance.values[p.name][0].id.name;
 				} else {
-					$scope.values[p.name] = instance.values[p.name].map(function(v){
-						if(typeof v == 'string')
-							return v;
-						return v.id.name;
-					});
+					$scope.values[p.name] = instance.values[p.name];
 				}
 			});
 		}
