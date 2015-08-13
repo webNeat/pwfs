@@ -4,7 +4,7 @@
 var apiURL = 'http://localhost:8080/ProtegeWeb4SEAMLESS/api/';
 
 // Définition de l'application
-var app = angular.module('protege', ['ngRoute', 'ngResource', 'ngDialog']);
+var app = angular.module('protege', ['ngRoute', 'ngResource', 'ngDialog', 'dndLists']);
 
 // Configuration de l'application
 app.config(function($routeProvider) {
