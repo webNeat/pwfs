@@ -112,8 +112,14 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 				$scope.currentClassIndex = index;
 				var setts = $scope.getClass(index).setts;
 				if(setts != undefined && setts != null){
-					$scope.filters = setts.filters;
-					$scope.separators = setts.separators;
+					if(setts.filters)
+						$scope.filters = setts.filters;
+					else
+						$scope.filters = [];
+					if(setts.separators)
+						$scope.separators = setts.separators;
+					else
+						$scope.separators = [];
 				} else {
 					$scope.filters = [];
 					$scope.separators = [];
@@ -244,29 +250,35 @@ app.directive('browser', function($rootScope, $http, ngDialog){
 
 			$scope.showFilter = function(){
 				console.log('Showing Filter Window');
+				console.log('setts: ', $scope.getClass($scope.currentClassIndex).setts);
 				var setts = $scope.getClass($scope.currentClassIndex).setts;
 				if(setts != null && setts != undefined){
-					$scope.filters = setts.filters;
-					$scope.separators = setts.separators;
+					if(setts.filters)
+						$scope.filters = setts.filters;
+					else
+						$scope.filters = [];
+					if(setts.separators)
+						$scope.separators = setts.separators;
+					else
+						$scope.separators = [];
+				} else {
+					$scope.filters = [];
+					$scope.separators = [];
 				}
-				console.log('$scope.filters: ', $scope.filters);
-				console.log('$scope.separators: ', $scope.separators);
+
 				$scope.showingFilter = true;
 			};
 
-			$scope.applySelectedFilter = function(filters, separators){
-				if(filters == undefined || separators == undefined)
-					return;
-
-				$scope.filters = filters;
-				$scope.separators = separators;
+			$scope.applySelectedFilter = function(){
+				console.log('filters:', $scope.filters);
+				console.log('separators:', $scope.separators);
 				$scope.showingFilter = false;
 
 				$http({url: apiURL + 'class-settings', method:'POST', params: { 
 					project: $scope.project.name,
 					'class': $scope.getClass($scope.currentClassIndex).fullName,
-					filters: filters,
-					separators: separators
+					filters: $scope.filters,
+					separators: $scope.separators
 				}})
 				.success(function(response) {
 					if(response.done){
