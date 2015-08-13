@@ -3,7 +3,7 @@
     <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
   </div>
 </div>
-<div ng-show="showingFilter">
+<div ng-if="showingFilter">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-primary">
@@ -13,7 +13,7 @@
 						choices="propertiesChoices"
 						filters="filters"
 						separators="separators"
-						on-applied="applySelectedFilter(filters, separators)"
+						on-applied="applySelectedFilter()"
 					></instance-display-pattern>
 				</div>
 			</div>
