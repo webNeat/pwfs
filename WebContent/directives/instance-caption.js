@@ -27,8 +27,10 @@ app.directive('instanceCaption', function($rootScope, $http){
 								$scope.instance.values[key].forEach(function(v){
 									if(typeof v === 'string')
 										vals[$scope.shorten(key)] += v + ' ';
-									else 
+									else if(v['id'])
 										vals[$scope.shorten(key)] += $scope.shorten(v['id']['name']) + ' ';
+									else 
+										vals[$scope.shorten(key)] += $scope.shorten(v['name']) + ' ';
 								});
 							}
 						}
