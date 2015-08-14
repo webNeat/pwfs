@@ -57,13 +57,28 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 
 			$scope.properties = dataProps.concat(objProps);
 
-			var test = $scope.properties.map(function(a){
-				return {
-					type: a.type,
-					name: $scope.shorten(a.name)
-				};
+			var lastY = 0;
+			$scope.properties.map(function(p){
+				if(p.setts && p.setts.y)
+					lastY = Math.max(lastY, p.setts.y);
 			});
-			console.log(JSON.stringify(test));
+
+			$scope.properties.map(function(p){
+				if(! p.setts){
+					lastY ++;
+					p.setts = {
+						x: 0, // n'est pas utilisé pour le moment
+						y: lastY,
+						w: 0, // n'est pas utilisé pour le moment
+						h: 50
+					};
+					$scope.savePropertySettings(p);
+				}
+			});
+
+			$scope.properties.sort(function(a, b){
+				return a.setts.y - b.setts.y;
+			});
 
 			$scope.selectedInstance = instance;
 			$scope.selectedClass = className;
@@ -80,6 +95,34 @@ app.controller('DashboardController', function($scope, $rootScope, $location, $h
 					$scope.values[p.name] = instance.values[p.name];
 				}
 			});
+		}
+	}
+
+	$scope.savePropertySettings = function(p){
+		$http({url: apiURL + 'property-settings', method:'POST', params: { 
+			project: $scope.project.name,
+			'class': $scope.selectedClass,
+			property: p.name,
+			x: p.setts.x,
+			y: p.setts.y,
+			w: p.setts.w,
+			h: p.setts.h
+		}})
+		.success(function(response){
+			if(!response.done){
+				$scope.msg.text = response.error;
+			}
+		}).error(function(){
+			$scope.msg.text = 'Some error happened on server side; Please check the server console !';
+		});
+	}
+
+	$scope.savePropertiesOrder = function(){
+		for(var i = 0; i < $scope.properties.length; i ++){
+			if($scope.properties[i].setts.y != i + 1){
+				$scope.properties[i].setts.y = i + 1;
+				$scope.savePropertySettings($scope.properties[i]);
+			}
 		}
 	}
 
