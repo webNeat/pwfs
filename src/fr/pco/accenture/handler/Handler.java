@@ -29,6 +29,7 @@ import fr.pco.accenture.models.Class;
 import fr.pco.accenture.models.ClassSettings;
 import fr.pco.accenture.models.Instance;
 import fr.pco.accenture.models.Project;
+import fr.pco.accenture.models.PropertySettings;
 import fr.pco.accenture.utils.Files;
 import fr.pco.accenture.utils.Helper;
 import fr.pco.accenture.utils.JSON;
@@ -365,6 +366,35 @@ public class Handler {
 			System.out.println("filters: " + filters);
 			System.out.println("separators: " + separators);
 			System.out.println("Settings saved !");
+			ClassesFactory.loadOne(projectName, className);
+			result.put("done", true);
+		}
+		return result;
+	}
+
+	public Object savePropertySettings() throws IOException {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if(project == null){
+			result.put("done", false);
+			result.put("error", "Missing project name");
+		} else if(className == null){
+			result.put("done", false);
+			result.put("error", "Missing class name");
+		} else if(classe == null){
+			result.put("done", false);
+			result.put("error", "Class '" + className + "' not found");
+		} else if(!params.containsKey("property")){
+		 	result.put("done", false);
+		 	result.put("error", "The property is missing");
+		} else {
+			String propertyName = params.get("property")[0];
+			int x = Integer.parseInt(params.get("x")[0]);
+			int y = Integer.parseInt(params.get("y")[0]);
+			int w = Integer.parseInt(params.get("w")[0]);
+			int h = Integer.parseInt(params.get("h")[0]);
+			PropertySettings ps = new PropertySettings(x, y, w, h);
+			String path = Files.propertySettingsFilePath(projectName, className, propertyName);
+			JSON.write(ps, path);
 			ClassesFactory.loadOne(projectName, className);
 			result.put("done", true);
 		}

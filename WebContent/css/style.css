@@ -22,3 +22,17 @@
 input.small-text-input {
 	width: 50px !important;
 }
+
+.properties-container .form-group {
+	border-radius: 3px;
+	border: 1px solid #f0f0f0;
+	padding: 5px;
+}
+
+.properties-container .form-group .title {
+	cursor: move;
+}
+
+.properties-container .dndDragging {
+	border: 1px solid #3073AC;
+}

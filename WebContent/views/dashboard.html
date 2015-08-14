@@ -33,10 +33,17 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading"> Properties </div>
 			<div class="panel-body">
-				<form>
-					<div ng-repeat="p in properties" class="form-group">
+				<form class="properties-container" dnd-list="properties">
+					<div  
+						ng-repeat="p in properties" 
+						class="form-group"
+						dnd-draggable="p"
+				        dnd-moved="properties.splice($index, 1)"
+				        dnd-effect-allowed="move"
+				        dnd-selected="models.selected = p"
+					>
 						<div ng-if="p.type == 'data' && !p.multiple">
-							<label> {{ shorten(p.name) }} </label>
+							<label class="title"> {{ shorten(p.name) }} </label>
 							<textarea 
 								ng-model="values[p.name]"
 								ng-change="saveValue(p.name)"

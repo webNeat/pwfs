@@ -109,9 +109,9 @@ public class Controller extends HttpServlet {
 			case "class-settings":
 				result = handler.saveClassSettings();
 			break;
-			// case "property-settings":
-			// 	result = handler.savePropertySettings();
-			// break;
+			 case "property-settings":
+			 	result = handler.savePropertySettings();
+			 break;
 			// case "project-settings":
 			// 	result = handler.saveProjectSettings();
 			// break;
