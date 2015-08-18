@@ -58,6 +58,7 @@ public class Files {
 
 	public static String propertySettingsFilePath(String projectName, String className, String propertyName){
 		className = Helper.stringAfter(className, "#");
+		propertyName = Helper.stringAfter(propertyName, "#");		
 		return classFolderPath(projectName, className) + File.separator + propertyName + ".json";
 	}
 
