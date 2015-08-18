@@ -58,9 +58,13 @@ public class InstancesFactory {
 			if(withObjectValues && p.getRangeDatatype() == null){
 				Collection val = new ArrayList<Object>();
 				for(Object o : individual.getPropertyValues(p)){
-					String temp = o.toString();
-					System.out.println(temp);
-					// val.add(load(modelName, temp.getDirectType().getName(), temp.getName(), false));
+					try {
+						DefaultOWLIndividual temp = (DefaultOWLIndividual) o;
+						val.add(load(modelName, temp.getDirectType().getName(), temp.getName(), false));
+					} catch(Exception e){
+						String temp = o.toString();
+						System.out.println("INSTANCE:: " + temp);
+					}
 				}
 				values.put(p.getName(), val);
 			} else {
