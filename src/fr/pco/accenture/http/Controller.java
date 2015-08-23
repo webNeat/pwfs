@@ -90,7 +90,7 @@ public class Controller extends HttpServlet {
 
 		switch(uri){
 			case "projects": // add a new project
-				String name = request.getParameter("name");
+				String name = request.getParameter("name").trim().replaceAll(" ", "-");
 				Part[] files = new Part[3];
 				files[0] = request.getPart("file1");
 				files[1] = request.getPart("file2");

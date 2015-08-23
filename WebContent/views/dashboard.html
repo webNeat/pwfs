@@ -1,9 +1,3 @@
-<!-- <h1>Projet : {{ project.name }} </h1> -->
-<div class="row" ng-show="msg.text != ''">
-  <div class="col-md-12">
-    <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
-  </div>
-</div>
 <div class="row">
 	<div class="col-md-6">
 		<div class="row">
@@ -14,53 +8,18 @@
 			</div>
 			<div class="col-md-6">
 				<ol class="breadcrumb">
-					<li class="active"> For Class: {{shorten(selectedClass)}} </li>
+					<li class="active"> For Class: {{getClass(selectedClassName).caption}} </li>
 				</ol>
 			</div>
 		</div>
 		<browser 
-			ids="null" 
-			on-selected="loadValuesOf(className, instance, properties)"
-			on-class-changed="updateClass(className)"
+			names="null"
+			selected-class-name="selectedClassName"
+			on-class-clicked="selectClass(className)"
 		></browser>
 	</div>
 
 	<!-- Editor -->
 	<div class="col-md-6">
-		<ol class="breadcrumb">
-			<li class="active"> {{selectedInstance.name}} </li>
-		</ol>
-		<div class="panel panel-primary">
-			<div class="panel-heading"> Properties </div>
-			<div class="panel-body">
-				<form class="properties-container" dnd-list="properties">
-					<div  
-						ng-repeat="p in properties" 
-						class="form-group"
-						dnd-draggable="p"
-				        dnd-moved="properties.splice($index, 1)"
-				        dnd-effect-allowed="move"
-				        dnd-selected="models.selected = p"
-					>
-						<div ng-if="p.type == 'data' && !p.multiple">
-							<label class="title"> {{ shorten(p.name) }} </label>
-							<textarea 
-								ng-model="values[p.name]"
-								ng-change="saveValue(p.name)"
-								class="form-control" 
-							></textarea>
-						</div>
-						<div 
-							ng-if="p.type == 'data' && p.multiple"
-							ng-include="'views/partials/field-input.html'"
-						></div>
-						<div 
-							ng-if="p.type == 'object'"
-							ng-include="'views/partials/field.html'"
-						></div>
-					</div>
-				</form>
-			</div>
-		</div>
 	</div>
 </div>

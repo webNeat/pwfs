@@ -37,8 +37,7 @@ public class InstancesFactory {
 	}
 
 	public static void load(String modelName) {
-		if(! has(modelName))
-			instances.put(modelName, new HashMap<String, Instance>());
+		instances.put(modelName, new HashMap<String, Instance>());
 		for(String className : ClassesFactory.getNames(modelName))
 			for(String instanceName : ClassesFactory.get(modelName, className).getInstances())
 				load(modelName, className, instanceName, true);

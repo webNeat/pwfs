@@ -15,9 +15,10 @@ app.config(function($routeProvider) {
 	    templateUrl: 'views/projects.html',
 	    controller: 'ProjectsController'
 	  })
-	  .when('/dashboard', {
+	  .when('/dashboard/:project', {
 	    templateUrl: 'views/dashboard.html',
-	    controller: 'DashboardController'
+	    controller: 'DashboardController',
+	    reloadOnSearch: false
 	  })
 	  .otherwise({
 	    redirectTo: '/'

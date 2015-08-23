@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Protégé lehbil !</title>
+        <title>Protégé</title>
         <!-- Include Libraries -->
         <!-- jQuery -->
         <script type="text/javascript" src="vendors/jquery/jquery.js"></script>
@@ -45,14 +45,24 @@
             </div>
         </nav>
         <div class="container-fuild top-container">
+            <alerts></alerts>
             <div ng-view=""></div>
         </div>
 	    <!-- Application Js files -->
         <script src="app.js"></script>
-        <script src="controllers/projects.js"></script>
-        <script src="controllers/dashboard.js"></script>
+        
+        <script src="services/alerts.js"></script>
+
+        <script src="factories/projects.js"></script>
+        <script src="factories/classes.js"></script>
+        <script src="factories/instances.js"></script>
+
+        <script src="directives/alerts.js"></script>
         <script src="directives/browser.js"></script>
         <script src="directives/instance-display-pattern.js"></script>
         <script src="directives/instance-caption.js"></script>
+        
+        <script src="controllers/projects.js"></script>
+        <script src="controllers/dashboard.js"></script>
     </body>
 </html>
