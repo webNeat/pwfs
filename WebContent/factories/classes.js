@@ -9,6 +9,12 @@ app.factory('Classes', function(Alerts, $http, $routeParams){
 		this.instances = object.instances;
 		this.properties = object.properties;
 		this.setts = object.setts;
+		if(!this.setts){
+			this.setts = {
+				filters: [],
+				separators: []
+			};
+		}
 		this.showChilds = true;
 	};
 	Classe.prototype.refresh = function(){
@@ -19,6 +25,20 @@ app.factory('Classes', function(Alerts, $http, $routeParams){
 	};
 	Classe.prototype.toggleChilds = function(){
 		this.showChilds = ! this.showChilds;
+	};
+	Classe.prototype.saveSetts = function(done, error) {
+		console.log('Saving settings: ', this.setts);
+		f.saveSetts(this.name, done, error);
+	};
+	Classe.prototype.getProperties = function() {
+		var result = {};
+		this.properties.forEach(function(p){
+			result[p.name] = p;
+		});
+		return result;
+	};
+	Classe.prototype.sortProperties = function() {
+		// ...
 	};
 
 
@@ -41,6 +61,27 @@ app.factory('Classes', function(Alerts, $http, $routeParams){
 				});
 				if(done)
 					done();
+			}
+		})
+		.error(function(response){
+			Alerts.error('Some error happened on server side; Please check the server console !');
+			if(error)
+				error();
+		});
+	};
+	f.saveSetts = function(name, done, error){
+		var c = f.get(name);
+		$http({url: apiURL + 'class-settings', method:'POST', params: { 
+			project: $routeParams.project,
+			'class': name,
+			filters: c.setts.filters,
+			separators: c.setts.separators
+		}})
+		.success(function(response){
+			if(response.done === false)
+				Alerts.error(response.error);
+			else {
+				f.load(done, error);
 			}
 		})
 		.error(function(response){

@@ -14,12 +14,42 @@
 		</div>
 		<browser 
 			names="null"
-			selected-class-name="selectedClassName"
+			show-buttons="true"
+			current-class-name="selectedClassName"
 			on-class-clicked="selectClass(className)"
+			on-instance-clicked="selectInstance(instanceName)"
 		></browser>
 	</div>
 
 	<!-- Editor -->
 	<div class="col-md-6">
+		<ol class="breadcrumb">
+			<li class="active"> {{ instance.caption }} </li>
+		</ol>
+		<div class="panel panel-primary">
+			<div class="panel-heading"> Properties </div>
+			<div class="panel-body">
+				<form class="properties-container" ng-show="instance">
+					<div class="form-group" ng-repeat="p in getClass(selectedClassName).properties">
+						<div ng-if="p.type == 'data' && !p.multiple">
+							<label class="title"> {{ shorten(p.name) }} </label>
+							<textarea 
+								ng-model="instance.values[p.name]"
+								ng-change="instance.saveValue(p.name)"
+								class="form-control" 
+							></textarea>
+						</div>
+						<div 
+							ng-if="p.type == 'data' && p.multiple"
+							ng-include="'views/partials/field-input.html'"
+						></div>
+						<div 
+							ng-if="p.type == 'object'"
+							ng-include="'views/partials/field.html'"
+						></div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </div>

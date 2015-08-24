@@ -1,3 +1,17 @@
+<div ng-show="showingPatternForm">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading"> Instances display pattern </div>
+				<div class="panel-body">
+					<instance-display-pattern
+						on-applied="patternApplied()"
+					></instance-display-pattern>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="row">
 	<div class="col-md-6">
 		<!-- Classes Browser -->
@@ -16,8 +30,8 @@
 							</button>
 							<button 
 								ng-class="{ 
-									'btn-default': name != selectedClassName,
-									'btn-primary': name == selectedClassName
+									'btn-default': name != currentClassName,
+									'btn-primary': name == currentClassName
 								}"
 								ng-click="classClicked(name)"
 								class="btn btn-default btn-xs"
@@ -37,8 +51,11 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				Instances
-				<div class="btn-group pull-right">
-					<button ng-click="showFilter()" class="btn btn-default btn-xs">
+				<div ng-show="showButtons" class="btn-group pull-right">
+					<button ng-click="removeInstances()" class="btn btn-danger btn-xs">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+					<button ng-click="showPatternForm()" class="btn btn-default btn-xs">
 						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
 					</button>
 					<button ng-click="createInstance()" class="btn btn-success btn-xs">
@@ -49,11 +66,16 @@
 			<div class="panel-body">
 				<div ng-show="loadingInstances" class="alert alert-info"> Loading instances ... </div>
 				<div ng-hide="loadingInstances" ng-repeat="i in instances">
-					<div class="btn-group">
-					<button ng-click="removeInstance(i.name)" class="btn btn-danger btn-sm">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
-					<button 
+					<div class="input-group">
+						<div class="input-group-addon">
+							<input
+							    type="checkbox"
+							    name="selectedInstances[]"
+							    value="{{i.name}}"
+							    ng-model="i.selected"
+							>
+						</div>
+						<button 
 							ng-click="instanceClicked(i.name)"
 							ng-class="{ 
 								'btn-default': i.name != currentInstanceName,

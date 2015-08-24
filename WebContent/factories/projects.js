@@ -51,7 +51,7 @@ app.factory('Projects', function(Alerts, $http){
 	};
 	f.get = function(id){
 		if(typeof id === 'string')
-			if(f.indexes[id])
+			if(f.indexes[id] !== undefined)
 				id = f.indexes[id];
 			else {
 				Alerts.error('Project "' + id + '" not found');

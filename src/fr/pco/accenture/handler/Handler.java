@@ -295,9 +295,15 @@ public class Handler {
 								val = params.get("value")[0];
 							helper.addValueToDatatypeProperty(instance, p.getName(), val);
 						} else {
-							helper.removeValuesOfDatatypeProperty(instance, p.getName());
-							for(String val : params.get("value"))
-								helper.addValueToDatatypeProperty(instance, p.getName(), val);
+							if(params.containsKey("value")){
+								helper.removeValuesOfDatatypeProperty(instance, p.getName());
+								for(String val : params.get("value")){
+									helper.addValueToDatatypeProperty(instance, p.getName(), val);
+									System.out.println("Adding Value: " + val);
+								}
+							} else {
+								// ...
+							}
 						}
 					} else {
 						helper.removeValuesOfObjectProperty(instance, p.getName());

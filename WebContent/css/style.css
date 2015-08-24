@@ -36,3 +36,10 @@ input.small-text-input {
 .properties-container .dndDragging {
 	border: 1px solid #3073AC;
 }
+
+.alerts {
+	position: fixed;
+	bottom: 0px;
+	right: 10px;
+	z-index: 1;
+}

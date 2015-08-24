@@ -1,31 +1,142 @@
 app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
+	var shorten = function(str){
+		return str.substring(str.indexOf('#') + 1);
+	}
 	function Instance(object){
 		this.make(object);
 	};
 	Instance.prototype.make = function(object) {
 		this.name = object.name;
 		this.className = object.className;
-		this.caption = this.name.substring(this.name.indexOf("#") + 1);
-		this.values = object.values;
-		this.parseValues();
+		this.caption = shorten(this.name);
+		this.parseValues(object.values);
 	};
 	Instance.prototype.applyFilter = function() {
+		var self = this;
 		var setts = Classes.get(this.className).setts;
-		// ...
+		if(setts){
+			var vals = {};
+			for(var key in self.values){
+				if(self.values.hasOwnProperty(key)){
+					vals[shorten(key)] = '';
+					if(self.values[key].forEach){
+						self.values[key].forEach(function(v){
+							if(typeof v === 'string')
+								vals[shorten(key)] += v + ' ';
+							else if(v['id'])
+								vals[shorten(key)] += shorten(v['id']['name']) + ' ';
+							else 
+								vals[shorten(key)] += shorten(v['name']) + ' ';
+						});
+					} else {
+						console.log('Value?', self.values[key]);
+					}
+				}
+			}
+			var filters = setts.filters.filter(function(e){
+				e = e.trim();
+				return (e != '' && vals[e] != undefined && vals[e].trim() != '');
+			});
+
+			self.caption = '';
+			var tempIndex = 0;
+			if(setts.separators == undefined)
+				setts.separators = [];
+			while(tempIndex < filters.length){
+				self.caption += vals[filters[tempIndex]];
+				if(tempIndex < setts.separators.length && setts.separators[tempIndex] != '')
+					self.caption += setts.separators[tempIndex];
+				else
+					self.caption += ' ';
+				tempIndex ++;
+			}
+
+			self.caption = self.caption.trim();
+			if(self.caption == '')
+				self.caption = shorten(self.name);
+		}
 	};
-	Instance.prototype.parseValues = function() {
-		// ...
+	Instance.prototype.parseValues = function(vals){
+		var self = this;
+		var props = Classes.get(this.className).properties;
+		self.values = {};
+		if(props){
+			props.forEach(function(p){
+				if(p.type == 'data' && !p.multiple){
+					if(vals[p.name] == undefined || vals[p.name].length == 0)
+						self.values[p.name] = [''];
+					else if(typeof vals[p.name][0] === 'string')
+						self.values[p.name] = [vals[p.name][0]];
+					else
+						self.values[p.name] = [vals[p.name][0].id.name];
+				} else {
+					self.values[p.name] = vals[p.name].map(function(v){
+						if(typeof v == 'string')
+							return v;
+						return v.id.name;
+					});
+					if(self.name == 'OBJETS_2')
+						console.log(p.name, vals[p.name]);
+				}
+			});
+		}
 	};
-	Instance.prototype.refresh = function(){
+	Instance.prototype.refresh = function(done){
 		var self = this;
 		f.load(function(){
 			self.make(f.get(self.name));
+			if(done)
+				done();
 		});
 	};
 	Instance.prototype.remove = function() {
 		f.remove(this.name);
 	};
-
+	Instance.prototype.saveValue = function(propertyName, done, error) {
+		var self = this;
+		$http({url: apiURL + 'values', method:'POST', params: { 
+			project: $routeParams.project,
+			instance: self.name,
+			property: propertyName,
+			value: self.values[propertyName]
+		}}).success(function(response){
+			if(response.done === false){
+				Alerts.error(response.error);
+				if(error)
+					error();
+			} else {
+				self.refresh(done);
+			}
+		})
+		.error(function(response){
+			Alerts.error('Some error happened on server side; Please check the server console !');
+		});
+	};
+	Instance.prototype.addValue = function(propertyName, value, done, error) {
+		var self = this;
+		var p = Classes.get(this.className).getProperties();
+		if(p[propertyName]){
+			p = p[propertyName];
+			if(p.type == 'data'){
+				self.values[p.name].push('New value here');
+			} else {
+				if(self.values[p.name].indexOf(value) == -1){
+					if(p.multiple)
+						self.values[p.name].push(value);
+					else
+						self.values[p.name] = [ value ];
+				}
+			}
+			self.saveValue(p.name, done, error);
+		}
+	};
+	Instance.prototype.removeValue = function(propertyName, value, done, error) {
+		var index = this.values[propertyName].indexOf(value);
+		if(index != -1){
+			this.values[propertyName].splice(index, 1);
+			this.saveValue(propertyName, done, error);
+		}
+	};
 
 	var f = {
 		list : [],
@@ -49,6 +160,9 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 					f.byClass[item.className].push(f.list.length);
 					f.list.push(new Instance(item));
 				});
+				f.list.forEach(function(instance){
+					instance.applyFilter();
+				});
 				if(done)
 					done();
 			}
@@ -70,13 +184,11 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 		return result;
 	};
 	f.ofClass = function(name){
-		console.log('Instances of: ' + name);
 		if(f.byClass[name] === undefined)
 			return null;
 		var result = f.byClass[name].map(function(id){
 			return f.list[id];
 		});
-		console.log(result);
 		return result;
 	};
 	f.exists = function(name){
@@ -87,9 +199,11 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 			if(f.indexes[id] !== undefined)
 				id = f.indexes[id];
 			else {
+				if(id.indexOf('#') != -1)
+					return f.get(id.substring(id.indexOf('#') + 1), silent);
 				if(!silent){
-					Alerts.error('Class "' + id + '" not found');
-					console.error('Class "' + id + '" not found');
+					Alerts.error('Instance "' + id + '" not found');
+					console.error('Instance "' + id + '" not found');
 					console.log(f.indexes);
 					console.log(f.list);
 				}
