@@ -1,21 +1,21 @@
 <div>
 	<label> {{ shorten(p.name) }} </label>
 	<div class="pull-right">
-		<button ng-click="addValueToProperty(p)" class="btn btn-success btn-xs">
+		<button ng-click="addValueToDataProperty(p)" class="btn btn-success btn-xs">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 		</button>
 	</div>
 </div>
 <ul class="list-group">
-  <li ng-show="values[p.name].length == 0" class="list-group-item"> Click "+" to add valuess </li>
-  <li ng-repeat="v in values[p.name]" class="list-group-item">
+  <li ng-show="instance.values[p.name].length == 0" class="list-group-item"> Click "+" to add values </li>
+  <li ng-repeat="v in instance.values[p.name]" class="list-group-item">
     <div class="input-group">
       <div class="input-group-btn">
-        <button  ng-click="removeValue(p, v)" class="btn btn-danger btn-sm">
+        <button style="margin-right: 10px;" ng-click="removeValue(p.name, v)" class="btn btn-danger btn-xs">
           <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         </button>
       </div>
-      <input type="text" ng-model="v" ng-change="saveValue(p.name)" class="form-control">
+      <input type="text" ng-model="v" ng-blur="setDataProperty(p.name, $index, v)" class="form-control">
     </div>
   </li>
 </ul>

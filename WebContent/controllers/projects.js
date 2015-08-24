@@ -1,26 +1,24 @@
-app.controller('ProjectsController', function($scope, $rootScope, $location, $http){
+app.controller('ProjectsController', function($scope, $location, Projects, Alerts){
+	$scope.projects = Projects.all();
+	$scope.$watch(Projects.all, function(){
+		$scope.projects = Projects.all();
+	});
 
-	$scope.msg = {
-		type: 'danger',
-		text: ''
-	};
-
-	$scope.projects = [];
 	$scope.newProject = '';
 	$scope.uploadURL = apiURL + 'projects';
 	$scope.uploading = false;
 	$scope.uploadProgress = 0;
-	$scope.loading = false;
+	$scope.loading = true;
 
 	$scope.load = function(project){
-		$rootScope.project = project;
-		$location.path('/dashboard');
+		$location.path('/dashboard/' + project.name);
 	}
 
 	$scope.validName = function(){
+		$scope.newProject = $scope.newProject.trim();
 		return (
-			$scope.newProject.trim() != '' && 
-			$scope.projects.indexOf($scope.newProject) == -1
+			$scope.newProject != '' && 
+			! Projects.exists($scope.newProject)
 		);
 	}
 
@@ -37,43 +35,26 @@ app.controller('ProjectsController', function($scope, $rootScope, $location, $ht
 	        });
 	    },
 	    success: function() {
-	    	console.log('Success !!');
+	    	Alerts.success('Project uploaded');
 	    },
 	    error: function() {
-	    	$scope.$apply(function(){
-	    		$scope.msg.text = 'Erreur lors de la communication avec le serveur !';
-	    	});
+    		Alerts.error('Erreur lors de la communication avec le serveur !');
 	    },
 		complete: function(xhr) {
-			$scope.$apply(function(){
-				var response = $.parseJSON(xhr.responseText);
-				$scope.uploading = false;
-				if(response.done){
-					$scope.msg.text = "Le projet est ajouté avec succés";
-					$scope.msg.type = "success";
-					$scope.loadProjects();
-				}
-			});
+			var response = $.parseJSON(xhr.responseText);
+			$scope.uploading = false;
+			if(response.done){
+				Alerts.success("Le projet est ajouté avec succés");
+				$scope.loading = true;
+				Projects.load(function(){
+					$scope.loading = false;
+				});
+			}
 		}
 	});
 
-	$scope.loadProjects = function(){
-		$scope.loading = true;
-		$http({url: apiURL + 'projects', method:'GET'})
-			.success(function(response){
-				$scope.projects = response;
-				$scope.loading = false;
-				if(response.length == 0){
-					$scope.msg.type = 'info';
-					$scope.msg.text = 'No project found. Please use the form below to add new projects';
-				}
-			})
-			.error(function(){
-				$scope.msg.text = 'Some error happened on server side; Please check the server console !';
-				$scope.loading = false;
-			});
-	}
-
-	$scope.loadProjects();
-
+	Projects.load(function(){
+		$scope.loading = false;
+		Alerts.success('Projects loaded successfully');
+	});
 });

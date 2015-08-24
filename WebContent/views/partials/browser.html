@@ -1,19 +1,11 @@
-<div class="row" ng-show="msg.text">
-  <div class="col-md-12">
-    <div class="alert alert-{{msg.type}}"> {{msg.text}} </div>
-  </div>
-</div>
-<div ng-if="showingFilter">
+<div ng-show="showingPatternForm">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-primary">
-				<div class="panel-heading"> Instances pattern </div>
+				<div class="panel-heading"> Instances display pattern </div>
 				<div class="panel-body">
-					<instance-display-pattern 
-						choices="propertiesChoices"
-						filters="filters"
-						separators="separators"
-						on-applied="applySelectedFilter()"
+					<instance-display-pattern
+						on-applied="patternApplied()"
 					></instance-display-pattern>
 				</div>
 			</div>
@@ -28,29 +20,29 @@
 				Classes
 			</div>
 			<div class="panel-body">
-				<div ng-show="loadingClasses" class="alert alert-info"> Les classes sont en cours de chargement ... </div>
+				<div ng-show="loadingClasses" class="alert alert-info"> Loading classes ... </div>
 				<script type="text/ng-template" id="tree_node.html">
 					<div class="tree_node">
 						<div class="btn-group" role="group">
-							<button ng-show="getClass(c).childs.length > 0" ng-click="toggleChildsOf(c)" class="btn btn-success btn-xs" style="margin-left: -15px;">
-								<span ng-show="!getClass(c).showChilds" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-								<span ng-show="getClass(c).showChilds" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+							<button ng-show="classes[name].childs.length > 0" ng-click="classes[name].toggleChilds()" class="btn btn-success btn-xs">
+								<span ng-show="!classes[name].showChilds" class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								<span ng-show="classes[name].showChilds" class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 							</button>
 							<button 
 								ng-class="{ 
-									'btn-default': c != currentClassIndex,
-									'btn-primary': c == currentClassIndex
-								}" 
-								ng-click="loadInstancesOf(c)" 
+									'btn-default': name != currentClassName,
+									'btn-primary': name == currentClassName
+								}"
+								ng-click="classClicked(name)"
 								class="btn btn-default btn-xs"
-							> {{ getClass(c).name }} </button>
+							> {{ classes[name].caption }} </button>
 						</div>
-						<div ng-show="getClass(c).showChilds">
-							<div ng-repeat="c in getClass(c).childs" ng-include="'tree_node.html'"></div>
-						</div> 
+						<div ng-show="classes[name].showChilds">
+							<div ng-repeat="name in classes[name].childs track by $index" ng-include="'tree_node.html'"></div>
+						</div>
 					</div>
 				</script>
-				<div ng-repeat="c in ids" ng-include="'tree_node.html'"></div>
+				<div ng-repeat="name in names track by $index" ng-include="'tree_node.html'"></div>
 			</div>
 		</div>
 	</div>
@@ -58,9 +50,12 @@
 		<!-- Instances Browser -->
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				Instance
-				<div class="btn-group pull-right" style="margin-bottom: 10px;">
-					<button ng-click="showFilter()" class="btn btn-default btn-xs">
+				Instances
+				<div ng-show="showButtons" class="btn-group pull-right">
+					<button ng-click="removeInstances()" class="btn btn-danger btn-xs">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+					<button ng-click="showPatternForm()" class="btn btn-default btn-xs">
 						<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
 					</button>
 					<button ng-click="createInstance()" class="btn btn-success btn-xs" style="margin-left: 6px;" >
@@ -74,20 +69,26 @@
 
 			
 			<div class="panel-body">
-				<div ng-repeat="i in instances">
-					<div class="btn-group">
-	    	    		<input  type="checkbox"  class="btn glyphicon glyphicon-uncheked large" 
-	    	    		 style="width: 25px; height: 25px; margin-right: 3px;"
-	    	    		/>
-					<button 
-							ng-click="instanceClicked(i)"
+				<div ng-show="loadingInstances" class="alert alert-info"> Loading instances ... </div>
+				<div ng-hide="loadingInstances" ng-repeat="i in instances">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<input
+							    type="checkbox"
+							    name="selectedInstances[]"
+							    value="{{i.name}}"
+							    ng-model="i.selected"
+							>
+						</div>
+						<button 
+							ng-click="instanceClicked(i.name)"
 							ng-class="{ 
-								'btn-default': i.name != currentInstance,
-								'btn-primary': i.name == currentInstance
+								'btn-default': i.name != currentInstanceName,
+								'btn-primary': i.name == currentInstanceName
 							}"
 							class="btn btn-sm"
 						>
-							<instance-caption instance="i"></instance-caption>
+							{{ i.caption }}
 						</button>
 					</div>
 				</div>

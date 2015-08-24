@@ -3,39 +3,44 @@
 		<div class="row">
 			<div class="col-md-6">
 				<ol class="breadcrumb">
-					<li class="active">For Project : {{project.name}}</li>
+					<li class="active">{{project.name}}</li>
 				</ol>
 			</div>
 			<div class="col-md-6">
 				<ol class="breadcrumb">
-					<li class="active"> For Class: {{getClass(selectedClassName).caption}} </li>
+					<li class="active"> For Class: {{shorten(selectedClass)}} </li>
 				</ol>
 			</div>
 		</div>
 		<browser 
-			names="null"
-			show-buttons="true"
-			current-class-name="selectedClassName"
-			on-class-clicked="selectClass(className)"
-			on-instance-clicked="selectInstance(instanceName)"
+			ids="null" 
+			on-selected="loadValuesOf(className, instance, properties)"
+			on-class-changed="updateClass(className)"
 		></browser>
 	</div>
 
 	<!-- Editor -->
 	<div class="col-md-6">
 		<ol class="breadcrumb">
-			<li class="active"> {{ instance.caption }} </li>
+			<li class="active"> {{selectedInstance.name}} </li>
 		</ol>
 		<div class="panel panel-primary">
 			<div class="panel-heading"> Properties </div>
 			<div class="panel-body">
-				<form class="properties-container" ng-show="instance">
-					<div class="form-group" ng-repeat="p in getClass(selectedClassName).properties">
+				<form class="properties-container" dnd-list="properties">
+					<div  
+						ng-repeat="p in properties" 
+						class="form-group"
+						dnd-draggable="p"
+				        dnd-moved="properties.splice($index, 1)"
+				        dnd-effect-allowed="move"
+				        dnd-selected="models.selected = p"
+					>
 						<div ng-if="p.type == 'data' && !p.multiple">
 							<label class="title"> {{ shorten(p.name) }} </label>
 							<textarea 
-								ng-model="instance.values[p.name]"
-								ng-change="instance.saveValue(p.name)"
+								ng-model="values[p.name]"
+								ng-change="saveValue(p.name)"
 								class="form-control" 
 							></textarea>
 						</div>

@@ -37,8 +37,7 @@ public class InstancesFactory {
 	}
 
 	public static void load(String modelName) {
-		if(! has(modelName))
-			instances.put(modelName, new HashMap<String, Instance>());
+		instances.put(modelName, new HashMap<String, Instance>());
 		for(String className : ClassesFactory.getNames(modelName))
 			for(String instanceName : ClassesFactory.get(modelName, className).getInstances())
 				load(modelName, className, instanceName, true);
@@ -55,21 +54,21 @@ public class InstancesFactory {
 		if(individual == null)
 			return null;
 		for(RDFProperty p : helper.getProperties(className)){
-			if(withObjectValues && p.getRangeDatatype() == null){
-				Collection val = new ArrayList<Object>();
-				for(Object o : individual.getPropertyValues(p)){
-					try {
-						DefaultOWLIndividual temp = (DefaultOWLIndividual) o;
-						val.add(load(modelName, temp.getDirectType().getName(), temp.getName(), false));
-					} catch(Exception e){
-						String temp = o.toString();
-						System.out.println("INSTANCE:: " + temp);
-					}
-				}
-				values.put(p.getName(), val);
-			} else {
+//			if(withObjectValues && p.getRangeDatatype() == null){
+//				Collection val = new ArrayList<Object>();
+//				for(Object o : individual.getPropertyValues(p)){
+//					try {
+//						DefaultOWLIndividual temp = (DefaultOWLIndividual) o;
+//						val.add(load(modelName, temp.getDirectType().getName(), temp.getName(), false));
+//					} catch(Exception e){
+//						String temp = o.toString();
+//						System.out.println("INSTANCE:: " + temp);
+//					}
+//				}
+//				values.put(p.getName(), val);
+//			} else {
 				values.put(p.getName(), individual.getPropertyValues(p));	
-			}			
+//			}			
 		}
 		Instance instance = new Instance(instanceName, className, values);
 		instances.get(modelName).put(instanceName, instance);

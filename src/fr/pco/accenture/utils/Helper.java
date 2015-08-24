@@ -106,7 +106,7 @@ public class Helper {
 
 	public boolean addValueToDatatypeProperty(OWLIndividual instance, String property, String valueToAdd){
 	    OWLDatatypeProperty protegePropGet = model.getOWLDatatypeProperty(property);
-	    instance.removePropertyValue(protegePropGet, instance.getPropertyValue(protegePropGet));
+	    // instance.removePropertyValue(protegePropGet, instance.getPropertyValue(protegePropGet));
 	    if(! valueToAdd.equals(""))
 	    	instance.addPropertyValue(protegePropGet, valueToAdd);
 	    System.out.println("Value: '" + valueToAdd + "'");

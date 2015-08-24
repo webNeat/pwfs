@@ -1,0 +1,11 @@
+<div class="alerts">
+	<div class="alert alert-danger" ng-repeat="msg in msgs.errors track by $index">
+		{{ msg }}
+	</div>
+	<div class="alert alert-info" ng-repeat="msg in msgs.infos track by $index">
+		{{ msg }}
+	</div>
+	<div class="alert alert-success" ng-repeat="msg in msgs.successes track by $index">
+		{{ msg }}
+	</div>
+</div>
