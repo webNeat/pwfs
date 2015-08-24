@@ -1,4 +1,8 @@
 app.factory('Classes', function(Alerts, $http, $routeParams){
+	var shorten = function(str){
+		return str.substring(str.indexOf('#') + 1);
+	};
+
 	function Classe(object){
 		this.make(object);
 	};
@@ -8,6 +12,7 @@ app.factory('Classes', function(Alerts, $http, $routeParams){
 		this.childs = object.childs.sort();
 		this.instances = object.instances;
 		this.properties = object.properties;
+		this.sortProperties();
 		this.setts = object.setts;
 		if(!this.setts){
 			this.setts = {
@@ -38,7 +43,41 @@ app.factory('Classes', function(Alerts, $http, $routeParams){
 		return result;
 	};
 	Classe.prototype.sortProperties = function() {
-		// ...
+		var dataProps = this.properties.filter(function(a){
+			return a.type == 'data';
+		}).sort(function(a, b){
+			a = shorten(a.name).toLowerCase();
+			b = shorten(b.name).toLowerCase();
+			if( a < b )
+				return -1;
+			else if(a > b)
+				return 1;
+			else
+				return 0;
+		});
+		var objProps = this.properties.filter(function(a){
+			return a.type != 'data';
+		}).sort(function(a, b){
+			a = shorten(a.name).toLowerCase();
+			b = shorten(b.name).toLowerCase();
+			if( a < b )
+				return -1;
+			else if(a > b)
+				return 1;
+			else
+				return 0;
+		});
+
+		this.properties = dataProps.concat(objProps);
+	};
+	Classe.prototype.setPropertySettings = function(propertyName, setts) {
+		var size = this.properties.length;
+		for(var i = 0; i < size; i ++){
+			if(this.properties[i].name == propertyName){
+				this.properties[i].setts = setts;
+				break;
+			}
+		}
 	};
 
 
@@ -136,6 +175,37 @@ app.factory('Classes', function(Alerts, $http, $routeParams){
 			return f.list[id].name;
 		});
 	};
+	f.savePropertySettings = function(name, propertyName, done, error){
+		var props = f.get(name).getProperties();
+		var setts = props[propertyName].setts;
+		if(!setts) setts = {};
+		if(!setts.x) setts.x = 0;
+		if(!setts.y) setts.y = 0;
+		if(!setts.w) setts.w = 0;
+		if(!setts.h) setts.h = 0;
+
+		$http({url: apiURL + 'property-settings', method:'POST', params: { 
+			project: $routeParams.project,
+			'class': name,
+			property: propertyName,
+			x: setts.x,
+			y: setts.y,
+			w: setts.w,
+			h: setts.h
+		}})
+		.success(function(response){
+			if(response.done === false)
+				Alerts.error(response.error);
+			else {
+				f.load(done, error);
+			}
+		})
+		.error(function(response){
+			Alerts.error('Some error happened on server side; Please check the server console !');
+			if(error)
+				error();
+		});
+	}
 	f.select = function(name){
 		f.selected = name;
 	};

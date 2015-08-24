@@ -102,12 +102,9 @@ public class ClassesFactory {
 		// Chargement de la classe
 		OWLModel model = ModelsFactory.get(modelName);
 		Helper helper = new Helper(model);
-		System.out.println("***  LOADONE  ");
-		System.out.println(className);
 		OWLNamedClass namedClass = model.getOWLNamedClass(className);
-		System.out.println("*** namedClass   " + namedClass);
-		String name = className;
-		System.out.println("n*** name " + name);
+		if(namedClass == null)
+			return null;
 		// Chargement des instances
 		List<String> instances = new ArrayList<String>();
 		Collection<?> individuals = namedClass.getInstances(false);
@@ -136,7 +133,7 @@ public class ClassesFactory {
 		List<String> childs = helper.getChilds(className);
 		System.out.println("****  Childs  " + childs );
 		// Construire la classe
-		Class result = new Class(name, childs, instances, properties, setts);
+		Class result = new Class(className, childs, instances, properties, setts);
 		System.out.println("***** construct Class  " + result);
 		// Ajouter la classes dans la table de hashage
 		classes.get(modelName).put(className, result);

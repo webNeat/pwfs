@@ -1,7 +1,7 @@
 app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 	var shorten = function(str){
 		return str.substring(str.indexOf('#') + 1);
-	}
+	};
 	function Instance(object){
 		this.make(object);
 	};
@@ -51,7 +51,7 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 				tempIndex ++;
 			}
 
-			self.caption = self.caption.trim();
+			self.caption = shorten(self.caption.trim());
 			if(self.caption == '')
 				self.caption = shorten(self.name);
 		}

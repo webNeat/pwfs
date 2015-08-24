@@ -1,3 +1,4 @@
+body { padding-bottom: 70px; }
 .top-container {
 	margin-top: 70px;
 	padding: 0px 5px;
@@ -23,23 +24,24 @@ input.small-text-input {
 	width: 50px !important;
 }
 
+.properties-container {
+	background: #f0f0f0;
+}
+
 .properties-container .form-group {
-	border-radius: 3px;
-	border: 1px solid #f0f0f0;
-	padding: 5px;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+	background: #fff;
+	padding: 10px;
 }
 
 .properties-container .form-group .title {
 	cursor: move;
 }
 
-.properties-container .dndDragging {
-	border: 1px solid #3073AC;
-}
-
 .alerts {
 	position: fixed;
-	bottom: 0px;
+	bottom: 40px;
 	right: 10px;
 	z-index: 1;
 }
