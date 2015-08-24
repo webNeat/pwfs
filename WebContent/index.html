@@ -35,11 +35,25 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#/">Protégé</a>
+<!--                   <a class="navbar-brand" href="#"> -->
+<!-- 			        <img alt="Brand" src="images/aa.png"> -->
+<!-- 			      </a> -->
+                    <a class="navbar-brand" href="#/">ProtégéWeb4SEAMLESS</a>
                 </div>
-                <div id="navbar" class="collapse navbar-collapse">
+                 <div id="navbar" class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">
-                        
+                    	<ul class="nav navbar-nav navbar-right">
+					        <li class="dropdown">
+					          <a  class="navbar-brand " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					        Help <span class="caret"></span></a>
+					          <ul class="dropdown-menu">
+					            <li><a href="#">User guide</a></li>
+					             <li><a href="#">Send feedback</a></li>
+					            <li role="separator" class="divider"></li>
+					            <li><a href="#">About</a></li>
+					          </ul>
+					        </li>
+					      </ul>
                     </ul>
                 </div>
             </div>
@@ -48,7 +62,20 @@
             <alerts></alerts>
             <div ng-view=""></div>
         </div>
-	    <!-- Application Js files -->
+
+     
+        </nav>
+	<nav class="navbar-fixed-bottom" style="height: 50px;">
+	   <div class="container-fluid" >
+	    <div class="navbar-header" >
+	    <div class="navbar-brand" style="margin-left: 500px;">ProtégéWeb4SEAMLESS | Powered by </div> 
+	    <div class="navbar-brand" style="margin-left: "><img alt="Brand" src="images/aa.png"> </div> 
+	    <div class="navbar-brand" style="margin-left: ">a PCO Innovation <a href=""> Consulting Team </a> initiative </div>  
+	    </div>
+	  </div>
+	</nav>
+   <!-- Application Js files -->
+		</script>
         <script src="app.js"></script>
         
         <script src="services/alerts.js"></script>
