@@ -8,8 +8,8 @@
         <!-- jQuery -->
         <script type="text/javascript" src="vendors/jquery/jquery.js"></script>
         <!-- jQuery UI -->
-<!--         <script type="text/javascript" src="vendors/jquery-ui/jquery-ui.js"></script>
-        <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css"> -->
+         <script type="text/javascript" src="vendors/jquery-ui/jquery-ui.js"></script>
+        <link rel="stylesheet" href="vendors/jquery-ui/jquery-ui.css">
         <!-- Ajax form jquery plugin -->
         <script src="vendors/jquery/ajax.form.js"></script>
         <!-- Bootstrap -->
@@ -63,16 +63,20 @@
             <div ng-view=""></div>
         </div>
 
-     
-        </nav>
-	<nav class="navbar-fixed-bottom" style="height: 50px;">
-	   <div class="container-fluid" >
-	    <div class="navbar-header" >
-	    <div class="navbar-brand" style="margin-left: 500px;">ProtégéWeb4SEAMLESS | Powered by </div> 
-	    <div class="navbar-brand" style="margin-left: "><img alt="Brand" src="images/aa.png"> </div> 
-	    <div class="navbar-brand" style="margin-left: ">a PCO Innovation <a href=""> Consulting Team </a> initiative </div>  
-	    </div>
-	  </div>
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container-fluid">
+    	    <div class="navbar-header">
+        	    <div class="navbar-brand" style="margin-left: 500px;">
+                    ProtégéWeb4SEAMLESS | Powered by 
+                </div> 
+        	    <div class="navbar-brand">
+                    <img alt="Brand" src="images/aa.png">
+                </div> 
+        	    <div class="navbar-brand"> 
+                    a PCO Innovation <a href="#/"> Consulting Team </a> initiative 
+                </div>  
+    	    </div>
+	   </div>
 	</nav>
    <!-- Application Js files -->
 		</script>
@@ -88,6 +92,8 @@
         <script src="directives/browser.js"></script>
         <script src="directives/instance-display-pattern.js"></script>
         <script src="directives/instance-caption.js"></script>
+        <script src="directives/sortable.js"></script>
+        <script src="directives/resizable.js"></script>
         
         <script src="controllers/projects.js"></script>
         <script src="controllers/dashboard.js"></script>

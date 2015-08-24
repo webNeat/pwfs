@@ -56,12 +56,14 @@ app.directive('browser', function(Alerts, Classes, Instances, ngDialog){
 					return i.selected;
 				});
 				console.log(selectedInstances);
+				if(selectedInstances.length > 0){
+					if(confirm('Are you sure about removing all the selected instances ?'))
+						selectedInstances.forEach(function(i){
+							console.log(i.name);
+							$scope.removeInstance(i.name);
+						});
+				}
 
-				if(confirm('Are you sure about removing all the selected instances ?'))
-					selectedInstances.forEach(function(i){
-						console.log(i.name);
-						$scope.removeInstance(i.name);
-					});
 			};
 			$scope.showPatternForm = function(){
 				console.log('showingPatternForm !');
