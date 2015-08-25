@@ -35,7 +35,7 @@
 							<label class="title"> {{ shorten(p.name) }} </label>
 							<textarea 
 								ng-model="instance.values[p.name]"
-								ng-change="instance.saveValue(p.name)"
+								ng-blur="setDataProperty(p.name, -1, instance.values[p.name])"
 								class="form-control" 
 							></textarea>
 						</div>

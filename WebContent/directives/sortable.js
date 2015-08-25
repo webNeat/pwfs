@@ -14,7 +14,7 @@ app.directive('sortable', function(Classes, Alerts){
 					});
 			    }
 			});
-			$element.disableSelection();
+			// $element.disableSelection();
 		}
 	};
 });
