@@ -293,6 +293,7 @@ public class Handler {
 							String val = "";
 							if(params.containsKey("value"))
 								val = params.get("value")[0];
+							helper.removeValuesOfDatatypeProperty(instance, p.getName());
 							helper.addValueToDatatypeProperty(instance, p.getName(), val);
 						} else {
 							if(params.containsKey("value")){

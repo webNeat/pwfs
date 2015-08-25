@@ -64,7 +64,11 @@ app.controller('DashboardController', function($scope, $routeParams, $location, 
 		});
 	};
 	$scope.setDataProperty = function(propertyName, index, value){
-		$scope.instance.values[propertyName][index] = value;
+		if(index == -1){
+			console.log('saving value:', $scope.instance.values[propertyName]);
+		} else {
+			$scope.instance.values[propertyName][index] = value;		
+		}
 		$scope.instance.saveValue(propertyName);
 	};
 	$scope.removeValue = function(propertyName, value){
