@@ -42,6 +42,7 @@ app.controller('DashboardController', function($scope, $routeParams, $location, 
 		console.log('add Object Property');
 		$scope.selectedProperty = property;
 		$scope.names = property.classes;
+		$scope.ccname = '';
 		$scope.dialog = ngDialog.open({
 			template: 'views/partials/select-instance.html',
 			scope: $scope

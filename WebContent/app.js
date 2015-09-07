@@ -1,7 +1,7 @@
 'use strict';
 
 // Le lien du web service
-var apiURL = 'http://localhost:8080/ProtegeWeb4SEAMLESS/api/';
+var apiURL = 'api/';
 
 // Définition de l'application
 var app = angular.module('protege', ['ngRoute', 'ngResource', 'ngDialog', 'dndLists']);

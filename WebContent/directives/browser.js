@@ -37,9 +37,12 @@ app.directive('browser', function(Alerts, Classes, Instances, ngDialog){
 			};
 			$scope.createInstance = function(){
 				$scope.loadingInstances = true;
+				var previousClass = Classes.getSelected();
+				Classes.select($scope.currentClassName);
 				Instances.create(function(){
 					$scope.instances = Instances.ofClass(Classes.getSelected());
 					Alerts.success('Instance created');
+					Classes.select(previousClass);
 					$scope.loadingInstances = false;
 				});
 			};
