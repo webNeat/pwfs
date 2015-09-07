@@ -1,6 +1,6 @@
 app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 	var shorten = function(str){
-		return str.substring(str.indexOf('#') + 1);
+		return str.substring(str.lastIndexOf('#') + 1);
 	};
 	function Instance(object){
 		this.make(object);
@@ -22,7 +22,7 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 					if(self.values[key].forEach){
 						self.values[key].forEach(function(v){
 							if(typeof v === 'string')
-								vals[shorten(key)] += v + ' ';
+								vals[shorten(key)] += shorten(v) + ' ';
 							else if(v['id'])
 								vals[shorten(key)] += shorten(v['id']['name']) + ' ';
 							else 
@@ -51,7 +51,7 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 				tempIndex ++;
 			}
 
-			self.caption = shorten(self.caption.trim());
+			self.caption = self.caption.trim();
 			if(self.caption == '')
 				self.caption = shorten(self.name);
 		}
