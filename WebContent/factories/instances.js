@@ -9,9 +9,23 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 		this.name = object.name;
 		this.className = object.className;
 		this.caption = shorten(this.name);
+		this.isApplyingFilter = false;
+		this.appliedFilter = false;
 		this.parseValues(object.values);
 	};
 	Instance.prototype.applyFilter = function() {
+		if(this.isApplyingFilter){
+			this.isApplyingFilter = false;
+			this.appliedFilter = true;
+			this.caption = this.name;
+			console.error('Could not apply filter for ' + this.name);
+			Alerts.error('Could not apply filter for ' + this.name);
+			return;
+		}
+		if(this.appliedFilter){
+			return;
+		}
+		this.isApplyingFilter = true;
 		var self = this;
 		var setts = Classes.get(this.className).setts;
 		if(setts){
@@ -21,12 +35,21 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 					vals[shorten(key)] = '';
 					if(self.values[key].forEach){
 						self.values[key].forEach(function(v){
-							if(typeof v === 'string')
-								vals[shorten(key)] += shorten(v) + ' ';
-							else if(v['id'])
-								vals[shorten(key)] += shorten(v['id']['name']) + ' ';
-							else 
-								vals[shorten(key)] += shorten(v['name']) + ' ';
+							// if(typeof v === 'string'){
+								var i = f.get(v, true);
+								if(i == null){
+									vals[shorten(key)] += v + ' ';
+								} else {
+									i.applyFilter();
+									vals[shorten(key)] += i.caption + ' ';
+								}
+							// } else if(v['id']){
+							// 	console.log('Impossible !!');
+							// 	vals[shorten(key)] += shorten(v['id']['name']) + ' ';
+							// } else {
+							// 	console.log('did happened !!');
+							// 	vals[shorten(key)] += shorten(v['name']) + ' ';								
+							// } 
 						});
 					} else {
 						console.log('Value?', self.values[key]);
@@ -50,11 +73,16 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 					self.caption += ' ';
 				tempIndex ++;
 			}
+			while(tempIndex < setts.separators.length){
+				self.caption += setts.separators[tempIndex] + ' ';
+				tempIndex ++;
+			}
 
 			self.caption = self.caption.trim();
 			if(self.caption == '')
 				self.caption = shorten(self.name);
 		}
+		this.isApplyingFilter = false;
 	};
 	Instance.prototype.parseValues = function(vals){
 		var self = this;
@@ -75,8 +103,6 @@ app.factory('Instances', function(Alerts, $http, $routeParams, Classes){
 							return v;
 						return v.id.name;
 					});
-					if(self.name == 'OBJETS_2')
-						console.log(p.name, vals[p.name]);
 				}
 			});
 		}
